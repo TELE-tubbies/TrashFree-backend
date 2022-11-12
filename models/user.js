@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema(
     },
     name :{
         type: String,
-        required: true,
     },
     email: {
         type: String,
@@ -29,18 +28,6 @@ const userSchema = new mongoose.Schema(
         type: String,
         default: "user",
     },
-    followers:{
-        type: Array,
-        default: [],
-    },
-    following:{
-        type: Array,
-        default: [],
-    },
-    past_events:{
-        type: Array,
-        default: [],    
-    }
   },
 );
 

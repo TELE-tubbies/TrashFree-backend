@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const auth = require('./middleware/auth');
 const authRouter = require("./routes/authRouter");
+const eventRoute = require("./routes/eventRoute");
 
 const app = express();
 app.use(express.json());
@@ -21,6 +21,7 @@ app.use(cors({origin: '*'}));
 app.get("/", (req, res) => res.json("Server is running..."))
 
 app.use("/api/auth", authRouter);
+app.use("/api/events", eventRoute);
 
 app.listen(PORT, () => console.log(`Listening to port ${PORT}`))
 
