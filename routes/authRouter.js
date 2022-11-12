@@ -6,13 +6,15 @@ router.post("/register", (req, res)=> {
     if (!req.body.username || !req.body.email || !req.body.password || !req.body.name || !req.body.phone_number ) {
         return res.status(400).json({msg: "Please enter all fields"})
     }
-    user.findOne({$or:[{email:req.body.email}, {username:req.body.username}]}).then(
+    user.findOne({$or:[{email:req.body.email}, {username:req.body.username}, {phone_number:req.body.phone_number}]}).then(
         (data) => {
             if (data) {
                 if (data.email === req.body.email) {
                     return res.status(400).json({message: "Email already in use"});
                 } else if (data.username === req.body.username) {
                     return res.status(400).json({message: "Username already in use"});
+                } else if (data.phone_number === req.body.phone_number) {
+                    return res.status(400).json({message: "Phone number already in use"});
                 }
             } else {
                 hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -53,6 +55,14 @@ router.post("/login", (req, res) => {
                 if (bcrypt.compareSync(req.body.password, data.password)) {
                     res.status(200).json({
                         message: "Login successful",
+                        user: {
+                            id: data._id,
+                            username: data.username,
+                            email: data.email,
+                            name: data.name,
+                            phone_number: data.phone_number,
+                            role: data.role
+                        }
                     })
                 } else {
                     res.status(400).json({message : "Incorrect password"});

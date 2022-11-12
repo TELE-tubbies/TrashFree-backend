@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const authRouter = require("./routes/authRouter");
 const eventRoute = require("./routes/eventRoute");
+const requestRoute = require("./routes/requestRouter");
+
 
 const app = express();
 app.use(express.json());
@@ -22,6 +24,8 @@ app.get("/", (req, res) => res.json("Server is running..."))
 
 app.use("/api/auth", authRouter);
 app.use("/api/events", eventRoute);
+app.use("/api/request", requestRoute);
+
 
 app.listen(PORT, () => console.log(`Listening to port ${PORT}`))
 
